@@ -1,0 +1,205 @@
+{% extends "teacherbase.html" %}
+{% load static %}
+
+{% block title %} Teacher Dashboard {% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/dashboardStyle.css' %}">
+<style>
+    /* Overall container */
+    /* Overall container */
+    .dashboard-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 30px;
+        background-color: #34495e;
+        /* Set background color to #34495e */
+        border-radius: 10px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+
+    /* Left Side (Text Content) */
+    .text-content {
+        flex: 1;
+        padding-right: 20px;
+        color: #34495e;
+        /* Dark gray text */
+    }
+
+    .current-date {
+    font-size: 1.3rem;
+    color: #f5f8fc !important; /* Add !important to ensure it takes precedence */
+    font-weight: bold;
+    }
+
+
+
+    .welcome-message {
+        font-size: 2.5rem;
+        color: #f5f8fc;
+        /* Darker text for header */
+        margin-top: 20px;
+        font-weight: 600;
+    }
+
+    .subtitle {
+        font-size: 1.4rem;
+        color: beigez;
+        /* Light gray for subtitle */
+    }
+
+    /* Right Side (Image Content) */
+    .teacher-illustration {
+        flex: 0.6;
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Teacher Information Section */
+    .teacher-info {
+        margin-top: 40px;
+        padding: 30px;
+        background-color: #ffffff;
+        /* White background for sections */
+        border-radius: 10px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .teacher-info h2 {
+        font-size: 1.8rem;
+        color: #2c3e50;
+        /* Dark gray */
+        margin-bottom: 20px;
+        border-bottom: 2px solid #ecf0f1;
+        /* Soft gray border */
+        padding-bottom: 10px;
+    }
+
+    .info-item {
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+    }
+
+    .info-item strong {
+        color: rgb(74, 74, 74);
+        /* Soft blue for labels */
+    }
+
+    .info-item span {
+        color: #7f8c8d;
+        /* Light gray for values */
+    }
+
+    /* Students Section */
+    .students-info {
+        margin-top: 40px;
+        padding: 30px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .students-info h2 {
+        font-size: 1.8rem;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #ecf0f1;
+        padding-bottom: 10px;
+    }
+
+    .students-info ul {
+        list-style-type: none;
+        padding-left: 0;
+        font-size: 1.2rem;
+    }
+
+    .students-info li {
+        margin-bottom: 12px;
+        color: #7f8c8d;
+    }
+
+    .students-info li:hover {
+        background-color: #f5f8fc;
+        padding: 8px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+  
+
+    .text-content .current-date {
+        font-size: 1.2rem;
+        color: #2980b9;
+        /* Blue for date */
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .dashboard-container {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .teacher-illustration {
+            max-width: 80%;
+            margin-top: 20px;
+        }
+    }
+</style>
+{% endblock head %}
+
+{% block body %}
+<div class="dashboard-container">
+    <!-- Left side: Text content -->
+    <div class="text-content">
+        <div class="current-date">{{ current_date }}</div>
+        <h1 class="welcome-message">Welcome back, {{ teacher.user.first_name }} {{ teacher.user.last_name }}!</h1>
+        <p class="subtitle">Manage your subjects and students efficiently.</p>
+    </div>
+
+    <!-- Right side: Image content -->
+    <!-- <img src="{% static 'images/teacher_dashboard.png' %}" alt="Teacher Illustration" class="teacher-illustration"> -->
+</div>
+
+<!-- Teacher Information Section -->
+<div class="teacher-info">
+    <h2>Teacher Information</h2>
+    <div class="info-item">
+        <strong>Full Name:</strong>
+        <span>{{ teacher.user.first_name }} {{ teacher.user.last_name }}</span>
+    </div>
+    <div class="info-item">
+        <strong>Subject:</strong>
+        <span>{{ teacher.subject }}</span>
+    </div>
+    <div class="info-item">
+        <strong>Qualification:</strong>
+        <span>{{ teacher.qualification }}</span>
+    </div>
+    <div class="info-item">
+        <strong>Date of Birth:</strong>
+        <span>{{ teacher.date_of_birth }}</span>
+    </div>
+    <div class="info-item">
+        <strong>Hire Date:</strong>
+        <span>{{ teacher.hire_date }}</span>
+    </div>
+</div>
+
+<!-- Students Section -->
+<div class="students-info">
+    <h2>Assigned Students</h2>
+    {% if teacher.students.all %}
+    <ul>
+        {% for student in teacher.students.all %}
+        <li>{{ student.user.first_name }} {{ student.user.last_name }} ({{ student.user.username }})</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No students assigned yet.</p>
+    {% endif %}
+</div>
+{% endblock body %}

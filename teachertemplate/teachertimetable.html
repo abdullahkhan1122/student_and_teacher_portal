@@ -1,0 +1,36 @@
+{% extends "teacherbase.html" %}
+{% load static %}  <!-- Load static at the top -->
+
+{% block title %}Teacher Timetable{% endblock title %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/teachertimetable.css' %}">
+{% endblock head %}
+
+{% block body %}
+    <h1>Teacher Timetable</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Time</th>
+                <th>Subject</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in timetable %}
+                <tr>
+                    <td>{{ entry.day }}</td>
+                    <td>{{ entry.time }}</td>
+                    <td>{{ entry.subject }}</td>
+                    <td>{{ entry.location }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">No timetable available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock body %}

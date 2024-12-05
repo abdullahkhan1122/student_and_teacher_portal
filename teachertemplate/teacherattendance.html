@@ -1,0 +1,97 @@
+{% extends "teacherbase.html" %}
+{% load static %}
+{% block title %} Attendance Management {% endblock title %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/teacherattendancestyle.css' %}">
+{% endblock head %}
+
+{% block body %}
+<div class="attendance-container">
+    <h2>Attendance Management</h2>
+
+    <!-- Attendance Form -->
+    <form method="POST" class="attendance-form">
+        {% csrf_token %}
+        <label for="attendance_date">Date:</label>
+        <input type="date" id="attendance_date" name="attendance_date" value="{{ selected_date }}" required>
+        <div class="form-buttons">
+            <button type="submit" name="action" value="mark">Mark Attendance</button>
+            <button type="submit" name="action" value="view">View Attendance</button>
+        </div>
+    </form>
+
+    <!-- Mark Attendance Section -->
+    {% if action == "mark" %}
+        <h3>Mark Attendance for {{ selected_date }}</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="attendance_date" value="{{ selected_date }}">
+            <table class="attendance-table">
+                <thead>
+                    <tr>
+                        <th>Roll No</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Attendance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.roll_no }}</td>
+                        <td>{{ student.user.first_name }}</td>
+                        <td>{{ student.user.last_name }}</td>
+                        <td>
+                            <select name="attendance_{{ student.id }}">
+                                <option value="Present">Present</option>
+                                <option value="Absent">Absent</option>
+                                <option value="Late">Late</option>
+                            </select>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit" name="action" value="save" class="save-button">Save Attendance</button>
+        </form>
+    {% endif %}
+
+    <!-- View Attendance Section -->
+    {% if action == "view" %}
+        <h3>Attendance Records for {{ selected_date }}</h3>
+        {% if attendance_records %}
+            <table class="attendance-table">
+                <thead>
+                    <tr>
+                        <th>Roll No</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Status</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in attendance_records %}
+                    <tr>
+                        <td>{{ record.student.roll_no }}</td>
+                        <td>{{ record.student.user.first_name }}</td>
+                        <td>{{ record.student.user.last_name }}</td>
+                        <td>
+                            {% if record.is_present %}
+                                Present
+                            {% else %}
+                                Absent
+                            {% endif %}
+                        </td>
+                        <td>{{ record.remarks }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No attendance records found for this date.</p>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock body %}

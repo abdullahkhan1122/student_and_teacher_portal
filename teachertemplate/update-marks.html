@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Marks</title>
+</head>
+<body>
+    <h1>Update Marks</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="date_awarded">Date:</label>
+        <input type="date" id="date_awarded" name="date_awarded" value="{{ current_date }}" required>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Marks</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.user.first_name }} {{ student.user.last_name }}</td>
+                    <td>
+                        <input type="number" name="student_{{ student.id }}" value="{% if student.marks_set.exists %}{{ student.marks_set.last.marks }}{% endif %}" required>
+                    </td>
+                    <td>
+                        <input type="text" name="remarks_{{ student.id }}" value="{% if student.marks_set.exists %}{{ student.marks_set.last.remarks }}{% endif %}">
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit">Save Marks</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,165 @@
+{% extends "teacherbase.html" %}
+{% load static %}
+{% block title %} Classroom {% endblock title %}
+
+{% block head %}
+<style>
+   .classroom-page body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #eef2f7;
+    margin: 0;
+    padding: 0;
+    color: #444;
+}
+
+.classroom-page h2 {
+    color: #34495e;
+    margin-top: 20px;
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.classroom-page form {
+    background-color: #ffffff;
+    padding: 25px;
+    margin: 20px auto;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.classroom-page form:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.classroom-page form input,
+.classroom-page form textarea {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.classroom-page form input:focus,
+.classroom-page form textarea:focus {
+    border-color: #2980b9;
+    outline: none;
+}
+
+.classroom-page form button {
+    background-color: #2980b9;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: capitalize;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.classroom-page form button:hover {
+    background-color: #3498db;
+    transform: translateY(-2px);
+}
+
+.classroom-page .resource-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+}
+
+.classroom-page .resource-list li {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 300px;
+    flex: 1 1 calc(30% - 20px);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    box-sizing: border-box;
+}
+
+.classroom-page .resource-list li:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+}
+
+.classroom-page .resources-items strong {
+    font-size: 16px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.classroom-page .resources-items p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0 15px;
+}
+
+.classroom-page .download-button {
+    background-color: #2980b9;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    text-transform: capitalize;
+    font-weight: 500;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.classroom-page .download-button:hover {
+    background-color: #3498db;
+    transform: translateY(-2px);
+}
+
+</style>
+{% endblock head %}
+
+{% block body %}
+<div class="classroom-page">
+    <h2>Upload a New Resource</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" name="upload_resource">Upload Resource</button>
+    </form>
+
+    <h2>Uploaded Resources</h2>
+    <ul class="resource-list">
+        {% for resource in resources %}
+        <li>
+            <div class="resources-items">
+                <strong>{{ resource.title }}</strong>
+                <p>{{ resource.description }}</p>
+            </div>
+            <a href="{% url 'download_resource' resource.id %}" class="download-button">Download</a>
+        </li>
+        {% empty %}
+        <p>No resources uploaded yet.</p>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock body %}
