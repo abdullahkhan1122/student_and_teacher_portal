@@ -1,0 +1,125 @@
+/* General container styling */
+.container {
+    margin: 0 auto; /* Center container horizontally */
+    font-family: 'Arial', sans-serif;
+    border-radius: 10px; /* Rounded corners for modern design */
+    background-color: #fdfdfd; /* Light grayish background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Centering and styling the heading */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2c3e50; /* Deep navy for the heading */
+    font-weight: 600;
+}
+
+/* Date input container styling */
+.date-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.date-container input[type="date"] {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    margin-right: 10px;
+    background-color: #f9f9f9; /* Light background for input */
+    color: #333; /* Text color */
+}
+
+.date-container label {
+    font-size: 14px;
+    color: #34495e; /* Medium gray for the label */
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto; /* Center table inside the container */
+    border: 1px solid #eaeaea; /* Subtle border */
+}
+
+table, th, td {
+    border: 1px solid #e0e0e0;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background-color: #3498db; /* Soft blue for header */
+    color: #ffffff; /* White text for better contrast */
+    font-weight: bold;
+}
+
+/* Alternate row colors for better readability */
+table tbody tr:nth-child(odd) {
+    background-color: #f8faff; /* Very light blue for alternate rows */
+}
+
+table tbody tr:hover {
+    background-color: #ecf0f1; /* Light gray for hover effect */
+}
+
+/* Input fields inside the table */
+input[type="number"], input[type="text"] {
+    width: 90%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    background-color: #fafafa;
+    color: #333;
+}
+
+/* Buttons styling */
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+button {
+    padding: 12px 24px;
+    font-size: 16px;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    background-color: #2ecc71; /* Vibrant green for primary buttons */
+}
+
+button.update-button {
+    background-color: #2980b9; /* Strong blue for update buttons */
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    input[type="number"], input[type="text"] {
+        width: 100%;
+    }
+
+    table, th, td {
+        font-size: 12px;
+    }
+
+    button {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,189 @@
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f1f1f1;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+.discussion-container {
+    margin: 30px auto;
+    width: 95%;
+    max-width: 900px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 800px;
+    overflow: hidden;
+}
+
+.discussion-title {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+/* Discussion Messages */
+.discussion-messages {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.message, .reply {
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.message-author, .reply .message-author {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.message-time, .reply .message-time {
+    font-size: 12px;
+    color: #7f8c8d;
+    margin-left: 10px;
+}
+
+.message-content, .reply .message-content {
+    font-size: 16px;
+    margin-top: 15px;
+    color: #34495e;
+}
+
+/* Reply Button */
+.reply-btn {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.reply-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Forms */
+.discussion-form, .reply-form {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    bottom: 0;
+    background-color: #fff;
+    padding: 10px 0;
+    z-index: 5;
+}
+
+textarea {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    margin-bottom: 15px;
+    resize: none;
+    width: 100%;
+    max-width: 800px;
+    min-height: 40px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button[type="submit"] {
+    padding: 12px 20px;
+    border-radius: 8px;
+    background-color: #3498db;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+/* Dropdown Styles */
+.dropdown {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.dropdown-btn {
+    background-color: transparent;
+    color: #34495e;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 0;
+    background-color: #ecf0f1;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.dropdown-content button {
+    background-color: #e74c3c;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-content button:hover {
+    background-color: #c0392b;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Scrollbar Customization */
+.discussion-messages::-webkit-scrollbar {
+    width: 10px;
+}
+
+.discussion-messages::-webkit-scrollbar-thumb {
+    background-color: #bdc3c7;
+    border-radius: 8px;
+}
+
+.discussion-messages::-webkit-scrollbar-thumb:hover {
+    background-color: #7f8c8d;
+}

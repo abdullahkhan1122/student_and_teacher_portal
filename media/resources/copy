@@ -1,0 +1,150 @@
+import requests
+from bs4 import BeautifulSoup as bs
+import csv
+from fpdf import FPDF
+from concurrent.futures import ThreadPoolExecutor
+
+# Scraping the data from the realpython
+def realpython():
+
+    url = 'https://realpython.com/python-concurrency/'
+
+    try:
+        response = requests.get(url)
+        soup = bs(response.text, 'html.parser')
+        
+        title = soup.find("h1").text.strip() if soup.find("h1") else "title not found"
+        author = soup.find("a", class_="author-name").text.strip() if soup.find("a", class_="author-name") else "Author not available"
+        date = soup.find("time").text if soup.find('time') else 'Date not available'
+        summary = " ".join([p.text.strip() for p in soup.find_all('p')[:3]]) if soup.find_all('p') else 'Summary not available'
+        level = soup.find("a", class_="badge badge-light text-muted").text.strip() if soup.find("a", class_="badge badge-light text-muted") else 'Not specified'
+        
+        return [{
+            "Website": "Real Python",
+            "Title": title,
+            "URL": url,
+            "Published Date": date,
+            "Level": level,
+            "Summary": summary
+        }]
+    except Exception as e:
+        print(f"Error : {e}")
+    
+# Scraping the data from the towardsdatascience
+def towardsdatascience():
+    
+    url = "https://towardsdatascience.com/concurrency-in-python-how-to-speed-up-your-code-with-threads-bb89d67c1bc9"
+
+    try:
+        response = requests.get(url)
+
+        soup = bs(response.content, "html.parser")
+        title = soup.find("h1", class_="pw-post-title").text.strip()
+        publish_date = soup.find("time").text.strip() if soup.find("time") else "Date not found"
+        summary = " ".join([p.text.strip() for p in soup.find_all("p")[:3]]) if soup.find_all("p") else "Summary not found"
+        
+        return [{
+            "Website": "Towards Data Science",
+            "Title": title,
+            "URL": url,
+            "Published Date": publish_date,
+            "Level": "Intermediate",
+            "Summary": summary
+        }]
+    except Exception as e:
+        print(f"Error : {e}")
+
+# Scraping the data from the geeksforgeeks
+def geeksforgeeks():
+
+    url = "https://www.geeksforgeeks.org/python-program-with-concurrency/?ref=gcse_outind"
+
+    try:
+
+        response = requests.get(url)
+        soup = bs(response.content, "html.parser")
+        
+        title = soup.find("h1").text.strip() if soup.find("h1") else "Title not found"
+        published_date = soup.find("div", class_="last_updated_parent").text.strip() if soup.find("div", class_="last_updated_parent") else "Date not found"
+        summary = " ".join([p.text.strip() for p in soup.find_all("p")[:3]]) if soup.find_all("p") else "Summary not found"
+        
+        return [{
+            "Website": "Geeks for Geeks",
+            "Title": title,
+            "URL": url,
+            "Published Date": published_date,
+            "Level": "Beginner",
+            "Summary": summary
+        }]
+    except Exception as e:
+        print(f"Error : {e}")
+        return []
+
+# Generating a CSV file
+def generate_csvfile(data, filename="concurrency_csvfile.csv"):
+
+    with open(filename, mode='w', newline='', encoding='utf-8') as file:
+
+        writer = csv.DictWriter(file, fieldnames=["Website", "Title", "URL", "Published Date", "Level", "Summary"])
+        writer.writeheader()
+        writer.writerows(data)
+        print("CSV file generated")
+
+# Generating the PDF of the content
+def generate_pdf(content, filename):
+
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.set_font("Arial", size=12)
+
+    pdf.add_font('DejaVu', '', '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', uni=True)
+    pdf.set_font('DejaVu', '', 12)
+    
+    pdf.multi_cell(0, 10, content)
+    pdf.output(filename)
+    print(f"{filename}..... generated successfully.")
+
+
+def convertingPdf(url, website_name, pdf_filename):
+
+    try:
+        response = requests.get(url)
+        soup = bs(response.content, "html.parser")
+        
+        title = soup.find("h1").text.strip() if soup.find("h1") else 'Title not found'
+        author = soup.find("a", class_="text-muted").text.strip() if soup.find("a", class_="text-muted") else "Author not found"
+        published_date = soup.find("time").text.strip() if soup.find("time") else "Date not found"
+        full_text = " ".join([p.text.strip() for p in soup.find_all("p")]) if soup.find_all("p") else 'Full text not found'
+        
+        content = f"Title: {title}\nAuthor: {author}\nPublished Date: {published_date}\n\n{full_text}"
+        generate_pdf(content, pdf_filename)
+    except Exception as e:
+        print(f"Error {website_name}: {e}")
+
+
+# Main Program
+data = []
+
+# Scraping the website with threads 
+with ThreadPoolExecutor() as executor:
+
+    functions = [realpython, towardsdatascience, geeksforgeeks]
+    results = executor.map(lambda func: func(), functions)
+
+    for i in results:
+
+        data.extend(i)
+
+    generate_csvfile(data)
+
+    # Generating the PDF_file
+    pdf = [
+        ("https://realpython.com/python-concurrency/", "Real Python", "Real_Python.pdf"),
+        ("https://towardsdatascience.com/concurrency-in-python-how-to-speed-up-your-code-with-threads-bb89d67c1bc9", "Towards Data Science", "Towards_Data_Science.pdf"),
+        ("https://www.geeksforgeeks.org/python-program-with-concurrency/?ref=gcse_outind", "Geeks for Geeks", "geeks_for_geeks.pdf")
+    ]
+
+    for url, name, pdf_file in pdf:
+        convertingPdf(url, name, pdf_file)
+

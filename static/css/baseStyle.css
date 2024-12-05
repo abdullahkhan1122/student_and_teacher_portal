@@ -1,0 +1,150 @@
+/* Reset some default styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+}
+
+/* Container for the entire layout */
+.container {
+    display: flex;
+}
+
+/* Sidebar styling */
+.sidebar {
+    width: 250px;
+    background-color: #30475e;
+    color: #f9f9f9;
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.logo h2 {
+    font-size: 24px;
+    color: #f9f9f9;
+    margin-bottom: 30px;
+}
+
+.nav {
+    list-style-type: none;
+    width: 100%;
+}
+
+.nav li {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #c4c4c4;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.nav a .icon {
+    margin-right: 10px;
+    font-size: 20px;
+    color: #a8d0e6;
+}
+
+.nav a.active,
+.nav a:hover {
+    background-color: #1f3a5b;
+    color: #a8d0e6;
+}
+
+/* Main content styling */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+/* Updated Top Bar styling */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #1f3a5b; /* Dark blue for a clean look */
+    color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.top-bar input[type="text"] {
+    width: 300px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info span {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.user-info .role {
+    color: #ddd;
+    font-size: 14px;
+}
+
+/* Welcome message styling */
+.dashboard-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #406882;
+    color: white;
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+    margin: 20px 0;
+}
+
+.dashboard-container .text-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dashboard-container .current-date {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.dashboard-container .welcome-message {
+    font-size: 24px;
+    margin: 0;
+}
+
+.dashboard-container .subtitle {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.student-illustration {
+    width: 150px;
+    height: auto;
+    border-radius: 50%;
+}

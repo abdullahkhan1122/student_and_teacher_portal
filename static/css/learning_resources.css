@@ -1,0 +1,86 @@
+/* Basic Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border-radius: 10px;
+    overflow: hidden; /* Ensure rounded corners */
+}
+
+table th, table td {
+    padding: 15px;
+    border: none;
+    text-align: left;
+    font-size: 16px;
+}
+
+/* Header Row Styling */
+table thead tr {
+    background-color: #30475e; /* Dark blue-gray header */
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Body Row Styling */
+table tbody tr:nth-child(even) {
+    background-color: #f1f8ff; /* Soft light blue for even rows */
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* White for odd rows */
+}
+
+/* Hover Effect */
+table tbody tr:hover {
+    background-color: #d1e9ff; /* Lighter blue when hovered */
+    cursor: pointer;
+    transform: scale(1.02); /* Slight zoom on hover for emphasis */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
+}
+
+/* Table Link Styling */
+
+
+a:hover {
+    background-color: #30475e; /* Blue background for hover */
+    color: white; /* White text when hovered */
+}
+
+/* Page Title Styling */
+h2.page-title {
+    color: #30475e;
+    font-size: 28px;
+    margin-bottom: 25px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+/* Container Styling */
+.resources-container {
+    padding: 25px;
+    background-color: #f9fbfd; /* Light background for the section */
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow around the container */
+    margin-top: 30px;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.resources-container:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
+}
+
+/* Empty State Styling */
+.empty-state {
+    text-align: center;
+    font-style: italic;
+    color: #888;
+    font-size: 18px;
+}

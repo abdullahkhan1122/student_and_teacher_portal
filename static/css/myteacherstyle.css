@@ -1,0 +1,80 @@
+/* Overall page container */
+.faculty-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Page title */
+.page-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+}
+
+/* Faculty group header */
+.position-title {
+    font-size: 1.8rem;
+    color: #34495e;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #7f8c8d;
+    padding-bottom: 10px;
+}
+
+/* Styling for the faculty table */
+.faculty-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+}
+
+.faculty-table th, .faculty-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ecf0f1;
+}
+
+.faculty-table th {
+    background-color: #2980b9;
+    color: white;
+    font-size: 1.1rem;
+}
+
+.faculty-table tr:nth-child(even) {
+    background-color: #ecf0f1;
+}
+
+.faculty-table tr:hover {
+    background-color: #d6d6d6;
+    cursor: pointer;
+}
+
+/* Small screen responsiveness */
+@media (max-width: 768px) {
+    .faculty-table th, .faculty-table td {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+    
+    .page-title {
+        font-size: 2rem;
+    }
+    
+    .position-title {
+        font-size: 1.6rem;
+    }
+}
+
+/* Email link styling */
+.email-link {
+    color: #007bff; /* Standard link color */
+    text-decoration: none; /* Remove underline for a clean look */
+    transition: color 0.2s ease, text-decoration 0.2s ease; /* Smooth transition for hover effect */
+}
+
+.email-link:hover {
+    text-decoration: underline; /* Add underline on hover */
+    color: #0056b3; /* Darker shade for better hover indication */
+}
