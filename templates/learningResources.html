@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Learning Resources{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/learning_resources.css' %}">
+{% endblock head %}
+
+{% block body %}
+<h2 class="page-title">Learning Resources</h2>
+
+<div class="resources-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Uploaded By</th>
+                <th>Uploaded At</th>
+                <th>Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for resource in resources %}
+            <tr>
+                <td>{{ resource.title }}</td>
+                <td>{{ resource.description }}</td>
+                <td>{{ resource.teacher.username }}</td>
+                <td>{{ resource.uploaded_at|date:"F j, Y, g:i a" }}</td>
+                <td>
+                    <a href="{{ resource.file.url }}" download>Download</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="empty-state">No resources available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock body %}

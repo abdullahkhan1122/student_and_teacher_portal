@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block title %}Attendance Records{% endblock %}
+
+{% block body %}
+<!-- Scoped CSS -->
+<style>
+/* Scope all styles to the attendance page */
+#attendance-container {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+#attendance-container h2, 
+#attendance-container h3 {
+  color: #2c3e50;
+  text-align: center;
+  margin: 20px 0;
+}
+
+#attendance-container form {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#attendance-container form label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+}
+
+#attendance-container form input[type="date"],
+#attendance-container form select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+#attendance-container form button {
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #3498db;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+#attendance-container form button:hover {
+  background-color: #2980b9;
+}
+
+#attendance-container table {
+  width: 70%;
+  border-collapse: collapse;
+  margin: 20px auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#attendance-container table thead {
+  background-color: #2c3e50;
+  color: #fff;
+}
+
+#attendance-container table th,
+#attendance-container table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+#attendance-container table th {
+  font-weight: bold;
+}
+
+#attendance-container table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#attendance-container table tbody tr:hover {
+  background-color: #e9e9e9;
+}
+
+#attendance-container p {
+  text-align: center;
+  font-style: bold;
+  color: black;
+}
+
+@media (max-width: 768px) {
+  #attendance-container form,
+  #attendance-container table {
+    width: 95%;
+  }
+
+  #attendance-container table th,
+  #attendance-container table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  #attendance-container form button {
+    font-size: 12px;
+  }
+}
+</style>
+
+<div id="attendance-container">
+  <h2>Your Attendance Records</h2>
+
+  <!-- Display the student's name and roll number -->
+  <p><b><strong>Name:</strong> {{ student_name }}</b></p>
+  <p><b><strong>Roll No:</strong> {{ roll_no }}</b></p>
+
+  {% if attendance_records %}
+      <table>
+          <thead>
+              <tr>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Remarks</th>
+                  <th>Teacher</th> <!-- New column for Teacher -->
+              </tr>
+          </thead>
+          <tbody>
+              {% for record in attendance_records %}
+              <tr>
+                  <td>{{ record.date }}</td>
+                  <td>
+                      {% if record.is_present %}
+                          <span style="color: green;">Present</span>
+                      {% else %}
+                          <span style="color: red;">Absent</span>
+                      {% endif %}
+                  </td>
+                  <td>{{ record.remarks }}</td>
+                  <td>{{ record.teacher.user.first_name }} {{ record.teacher.user.last_name }}</td> <!-- Display teacher's name -->
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+  {% else %}
+      <p>No attendance records found.</p>
+  {% endif %}
+</div>
+{% endblock %}

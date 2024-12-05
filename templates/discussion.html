@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}  <!-- Load static at the top -->
+
+{% block title %} Dashboard {% endblock title %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/studentdiscussionstyle.css' %}">
+{% endblock head %}
+
+{% block body %}
+<h2 class="discussion-title">Discussion Board</h2>
+
+<div class="discussion-container">
+    <div class="discussion-messages" id="discussion-messages">
+        {% for message in messages %}
+            <div class="message" id="message-{{ message.id }}">
+                <!-- Display Full Name instead of Username -->
+                <p class="message-author">{{ message.user.first_name }} {{ message.user.last_name }}
+                    <span class="message-time">{{ message.timestamp|date:"F j, Y, g:i a" }}</span>
+                </p>
+                <p class="message-content">{{ message.content }}</p>
+
+                <!-- Dropdown Menu for Delete (Only for the message author) -->
+                {% if message.user == request.user %}
+                    <div class="dropdown">
+                        <button class="dropdown-btn" onclick="toggleDropdown({{ message.id }})">⋮</button>
+                        <div class="dropdown-content" id="dropdown-content-{{ message.id }}">
+                            <button class="delete-btn" onclick="deleteMessage({{ message.id }})">Delete</button>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Display replies -->
+                <div class="replies">
+                    {% for reply in message.replies.all %}
+                        <div class="reply">
+                            <p class="message-author">{{ reply.user.first_name }} {{ reply.user.last_name }} 
+                                <span class="message-time">{{ reply.timestamp|date:"F j, Y, g:i a" }}</span></p>
+                            <p class="message-content">{{ reply.content }}</p>
+                        </div>
+                    {% empty %}
+                        <p>No replies yet.</p>
+                    {% endfor %}
+                </div>
+
+                <!-- Reply Button (visible initially) -->
+                <button class="reply-btn" onclick="toggleReplyForm({{ message.id }})">Reply</button>
+
+                <!-- Reply Form (initially hidden) -->
+                <form method="POST" class="reply-form" id="reply-form-{{ message.id }}" style="display: none;">
+                    {% csrf_token %}
+                    <textarea name="message" placeholder="Reply to this message..." required></textarea>
+                    <input type="hidden" name="parent_id" value="{{ message.id }}">
+                    <button type="submit">Post Reply</button>
+                </form>
+            </div>
+        {% empty %}
+            <p>No discussions yet. Be the first to start one!</p>
+        {% endfor %}
+    </div>
+
+    <form method="POST" class="discussion-form" id="discussion-form">
+        {% csrf_token %}
+        <textarea name="message" placeholder="Start a discussion..." rows="4" required></textarea>
+        <button type="submit">Post Message</button>
+    </form>
+</div>
+
+<script>
+    function toggleDropdown(messageId) {
+        var dropdownContent = document.getElementById('dropdown-content-' + messageId);
+        dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function deleteMessage(messageId) {
+        // Send an asynchronous request to delete the message
+        fetch("{% url 'delete_message' 0 %}".replace(0, messageId), {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        }).then(response => {
+            if (response.ok) {
+                // Remove the message from the DOM
+                const messageElement = document.getElementById('message-' + messageId);
+                if (messageElement) {
+                    messageElement.remove();
+                }
+            } else {
+                alert('Failed to delete message.');
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    // Scroll to the bottom of the discussion container on page load
+    window.onload = function() {
+        scrollToBottom();
+    }
+
+    function scrollToBottom() {
+        const discussionMessages = document.getElementById('discussion-messages');
+        discussionMessages.scrollTop = discussionMessages.scrollHeight;
+    }
+
+    // Toggle the visibility of the reply form when clicking the reply button
+    function toggleReplyForm(messageId) {
+        var form = document.getElementById('reply-form-' + messageId);
+        form.style.display = form.style.display === 'none' || form.style.display === '' ? 'flex' : 'none';
+    }
+</script>
+{% endblock body %}

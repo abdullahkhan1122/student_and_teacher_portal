@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %} My Timetable {% endblock title %}
+
+{% block body %}
+<h2 style="text-align: center; color: #30475e; margin-bottom: 20px;">My Timetable</h2>
+
+<div class="timetable-container">
+    <table class="timetable">
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Time</th>
+                <th>Subject</th>
+                <th>Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in timetable %}
+            <tr>
+                <td>{{ entry.day }}</td>
+                <td>{{ entry.time|time:"g:i A" }}</td>
+                <td>{{ entry.subject }}</td>
+                <td>{{ entry.location }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align: center;">No timetable available</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .timetable-container {
+        margin: 0 auto;
+        width: 90%;
+        max-width: 800px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .timetable {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0 auto;
+        text-align: left;
+    }
+
+    .timetable thead tr {
+        background-color: #30475e;
+        color: white;
+        font-weight: bold;
+    }
+
+    .timetable th, .timetable td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+    }
+
+    .timetable tbody tr:nth-child(odd) {
+        background-color: #f2f2f2;
+    }
+
+    .timetable tbody tr:nth-child(even) {
+        background-color: #ffffff;
+    }
+
+    .timetable tbody tr:hover {
+        background-color: #e8f6ff;
+        transition: background-color 0.3s ease;
+    }
+
+    .timetable th {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .timetable td {
+        font-size: 16px;
+        color: #333;
+    }
+
+    h2 {
+        font-size: 28px;
+        font-family: Arial, sans-serif;
+    }
+</style>
+{% endblock body %}

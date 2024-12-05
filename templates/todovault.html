@@ -1,0 +1,32 @@
+<!-- todoVault.html -->
+{% extends "base.html" %}
+{% load static %}  <!-- Load static at the top -->
+
+{% block title %} ToDo Vault {% endblock title %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/todovault.css' %}">
+{% endblock head %}
+
+{% block body %}
+    <h1 class="todo-vault-title">Your To-Do Vault</h1>
+
+    <!-- Form to add a new task -->
+    <form method="POST" class="add-task-form">
+        {% csrf_token %}
+        <input type="text" name="task" class="task-input" placeholder="Enter your task" required>
+        <button type="submit" class="add-task-button">Add Task</button>
+    </form>
+
+    <h2 class="task-list-title"><b>Tasks</b></h2>
+    <ul class="task-list">
+        {% for task in tasks %}
+            <li class="task-item">
+                <span class="task-text">{{ task.task }}</span>
+                <a href="{% url 'delete_task' task.id %}" class="delete-task-link" onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
+            </li>
+        {% empty %}
+            <p class="no-tasks-message">You have no tasks yet. Add a task to get started!</p>
+        {% endfor %}
+    </ul>
+{% endblock %}

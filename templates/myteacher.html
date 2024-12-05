@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}  <!-- Load static at the top -->
+
+{% block title %} Faculty Members {% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/myteacherstyle.css' %}">
+{% endblock head %}
+
+{% block body %}
+    <div class="faculty-container">
+        <h1 class="page-title">Faculty Members</h1>
+
+        {% if grouped_faculty %}
+            {% for position, faculty_list in grouped_faculty.items %}
+                <section class="faculty-group">
+                    <h2 class="position-title">{{ position }}</h2>
+                    <table class="faculty-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for faculty in faculty_list %}
+                                <tr>
+                                    <td>{{ faculty.name }}</td>
+                                    <td>
+                                        <a href="mailto:{{ faculty.email }}" class="email-link">{{ faculty.email }}</a>
+                                    </td>
+                                    <td>{{ faculty.phone }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </section>
+            {% endfor %}
+        {% else %}
+            <p>No faculty members found.</p>
+        {% endif %}
+    </div>
+{% endblock %}

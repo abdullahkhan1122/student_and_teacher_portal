@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}  <!-- Load static at the top -->
+
+{% block title %} Dashboard {% endblock title %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/dashboardStyle.css' %}">
+{% endblock head %}
+
+{% block body %}
+<div class="dashboard-container">
+    <!-- Left side: Text content -->
+    <div class="text-content">
+        <div class="current-date">{{ current_date }}</div>
+        <h1 class="welcome-message">Welcome back, {{ user.first_name }}!</h1>
+        <p class="subtitle">Always stay updated in your student portal</p>
+    </div>
+
+    <!-- Right side: Image content -->
+    <img src="{% static 'images/pic6.png' %}" alt="Student Illustration" class="student-illustration">
+</div>
+
+<!-- Student Information Section -->
+<div class="student-info">
+    <h2>Student Information</h2>
+    <div class="info-item">
+        <strong>Department:</strong>
+        <span>{{ student.department }}</span>
+    </div>
+    <div class="info-item">
+        <strong>Roll No:</strong>
+        <span>{{ student.roll_no }}</span>
+    </div>
+    <div class="info-item">
+        <strong>Section:</strong>
+        <span>{{ student.section }}</span>
+    </div>
+    <div class="info-item">
+        <strong>Degree:</strong>
+        <span>{{ student.degree }}</span>
+    </div>
+    <div class="info-item">
+        <strong>Batch:</strong>
+        <span>{{ student.batch }}</span>
+    </div>
+</div>
+{% endblock body %}
